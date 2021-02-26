@@ -1,24 +1,11 @@
 // Dans l'array toDo un valeur true signifie que cette action est accomplie, une valeur false signifie qu'elle est à faire
 //JSON TJS chaîne de caractères, pas directement un objet
-let notesJSON = `[
-	{
-		"titre": "Notes Javascript",
-		"texte": "Une méthode est une fonction appartenant à un objet",
-		"date": "15/01/2021",
-		"couleur": "rouge",
-		"dateRappel": "null"
-	},
-	{
-		"titre": "Notes Javascript",
-		"toDo": [
-			{"Faire les courses": true},
-			{"Payer le loyer": false}
-		],
-		"date": "18/01/2021",
-		"couleur": "rouge",
-		"dateRappel": "null"
-	}
-]`
+//utiliser json et transformer en objet
+//constructor prendre infos objets et boucler sur ceci 
+//methode pour instancier a partir de la boucle
+//aller chercher infos soit dans constructor (objet en entier) soit dans la boucle 
+
+
 class Note {
     constructor(titre, dateCreation, couleur, dateRappel = undefined) {
 
@@ -92,3 +79,15 @@ class Checklistnote extends Note {
         }
     }
 }
+let noteArray = [];
+
+for (let note of mesNotesParsees) {
+    if (note.texte !== undefined) {
+        noteArray.unshift(new TextNote(note.titre, note.texte));
+    }
+    else if (note.toDo !== undefined) {
+        noteArray.unshift(new ChecklistNote(note.titre, note.toDo));
+    }
+}
+
+
