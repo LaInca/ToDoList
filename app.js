@@ -1,3 +1,4 @@
+//Le JSON permet d'avoir une chaîne de caractères qui représente une structure de données
 let notesJSON = `[
 	{
 		"titre": "Notes Javascript",
