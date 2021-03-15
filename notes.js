@@ -58,6 +58,15 @@ class Note {
             this._dateRappel = dateRappel;
         }
     }
+    //ne doit pas se retrouver sur les instances mais sur la classe (avec le mot static)
+    //la methode displayNotes va afficher les instances dans un élément html (container)
+    static displayNotes(arrayInstance,containerHTML) {
+        for (let instance of arrayInstance){
+            containerHTML.insertAdjacentElement("beforeend",instance.render())
+        }
+    }
+
+
 }
 //Création de la classe fille TextNote avec un extends
 //constructor avec les arguments de la classe ancêtre "Note" plus un argument texte
@@ -76,16 +85,37 @@ class TextNote extends Note {
             this._texte = texte;
         }
     }
-    render() {
-      let div = document.createElement("div")
       //afficher tout ce qui se trouve entre debut et fin de la balise div
-    this.render(div, 'titre', this.titre)
-    this.render(div, 'texte', this.texte)
-    this.render(div,'dateCreation', this.dateCreation)
-    this.render(div, 'couleur', this.couleur)
-    this.render(div, 'dateRappel', this.dateRappel)
+    //entre les 2 étapes modifier div pour qu'il corresponde à ce que je veux afficher, L'objet note va avoir des propriétés qui seront utilisées pour créer le bon HTML
+    //utilisation de .innerHTML pour customiser ma div  innerHTML = `rrrrrrr`  titre texte datecréation 
+    //revoir les fonctions et la méthode displayNote innerHTML
+    render() {
+      let item = document.createElement("div")
+      item.innerHTML = `${this.titre}
+      ${this.texte}
+      ${this.dateCreation}
+      ${this.dateRappel}`;
+      item.style.background = this.couleur;
+      item.style.border = "2px solid black";
+      item._noteReference_ = this;
 
-    return div;    
+      let colorsMapping = {
+        rouge: "red",
+        orange: "orange",
+        jaune: "yellow",
+        vert: "green"
+    }
+    //creation du html
+    item.innerHTML= `
+
+            <h3>Titre:</h3> <p>${this.titre}</p>
+            <h3>Date de création:</h3> <p>${this.dateCreation}</p>
+            <h3>Date de rappel:</h3> <p>${this.dateRappel}</p>
+            <h3>Texte:</h3> <p>${this.texte}</p>
+    `
+        //attribuer la couleur du bacground avec la couleur de l instance.
+        item.style.background = colorsMapping[this.couleur];
+      return item;
     }
     
 }
@@ -102,6 +132,34 @@ class CheckListNote extends Note {
             this._toDo = toDo;
         }
     }
+    render() {
+        let item = document.createElement("div")
+        item.style.background = this.couleur;
+        item._noteReference_ = this;
+        let colorsMapping = {
+            rouge: "red",
+            orange: "orange",
+            jaune: "yellow",
+            vert: "green"
+        }
+        //creation du html
+        item.innerHTML= `
+    
+                <h3>Titre:</h3> <p>${this.titre}</p>
+                <h3>Date de création:</h3> <p>${this.dateCreation}</p>
+                <h3>Date de rappel:</h3> <p>${this.dateRappel}</p>
+        `
+        for (let tache of this.toDo){
+            for (let champ in tache){
+                item.innerHTML+=`<h3>${champ}</h3> <p>${tache[champ]}</p>`;
+                //console.log(champ,tache[champ])
+            }
+            //console.log(item)
+        }
+            //attribuer la couleur du background avec la couleur de l instance.
+            item.style.background = colorsMapping[this.couleur];
+        return item;
+      }
 }
 let noteArray = [];
 let mesNotesParsees = JSON.parse(notesJSON);
@@ -110,12 +168,15 @@ let mesNotesParsees = JSON.parse(notesJSON);
 //for in lui passe sur les noms de propriétés d'un objet (for key in ...)
 for (let note of mesNotesParsees) {
     if (note.texte !== undefined) {
-        noteArray.unshift(new TextNote(note.titre, note.texte, note.dateCreation, note.couleur, note.dateRappel));
+        noteArray.unshift(new TextNote(note.titre, note.texte, note.date, note.couleur, note.dateRappel));
     }
     else if (note.toDo !== undefined) {
-        noteArray.unshift(new CheckListNote(note.titre, note.toDo, note.dateCreation, note.couleur, note.dateRappel));
+        noteArray.unshift(new CheckListNote(note.titre, note.toDo, note.date, note.couleur, note.dateRappel));
     }
     
+
 }
+Note.displayNotes(noteArray,document.querySelector("#container"))
+
 
 
