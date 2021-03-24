@@ -61,6 +61,7 @@ class Note {
     //ne doit pas se retrouver sur les instances mais sur la classe (avec le mot static)
     //la methode displayNotes va afficher les instances dans un élément html (container)
     static displayNotes(arrayInstance,containerHTML) {
+        containerHTML.innerHTML = "";
         for (let instance of arrayInstance){
             containerHTML.insertAdjacentElement("beforeend",instance.render())
         }
@@ -91,10 +92,6 @@ class TextNote extends Note {
     //revoir les fonctions et la méthode displayNote innerHTML
     render() {
       let item = document.createElement("div")
-      item.innerHTML = `${this.titre}
-      ${this.texte}
-      ${this.dateCreation}
-      ${this.dateRappel}`;
       item.style.background = this.couleur;
       item.style.border = "2px solid black";
       item._noteReference_ = this;
@@ -107,7 +104,6 @@ class TextNote extends Note {
     }
     //creation du html
     item.innerHTML= `
-
             <h3>Titre:</h3> <p>${this.titre}</p>
             <h3>Date de création:</h3> <p>${this.dateCreation}</p>
             <h3>Date de rappel:</h3> <p>${this.dateRappel}</p>
@@ -135,6 +131,7 @@ class CheckListNote extends Note {
     render() {
         let item = document.createElement("div")
         item.style.background = this.couleur;
+        item.style.border = "2px solid black";
         item._noteReference_ = this;
         let colorsMapping = {
             rouge: "red",
@@ -144,7 +141,10 @@ class CheckListNote extends Note {
         }
         //creation du html
         item.innerHTML= `
-    
+                <input type="checkbox" id="à faire" name="à faire">
+                <label for="scales">A faire</label>
+                <input type="checkbox" id="terminé" name="terminé" checked>
+                <label for="scales">terminé</label>
                 <h3>Titre:</h3> <p>${this.titre}</p>
                 <h3>Date de création:</h3> <p>${this.dateCreation}</p>
                 <h3>Date de rappel:</h3> <p>${this.dateRappel}</p>
@@ -173,10 +173,8 @@ for (let note of mesNotesParsees) {
     else if (note.toDo !== undefined) {
         noteArray.unshift(new CheckListNote(note.titre, note.toDo, note.date, note.couleur, note.dateRappel));
     }
-    
-
 }
 Note.displayNotes(noteArray,document.querySelector("#container"))
 
-
-
+localStorage.setItem("newNote",JSON.stringify(noteArray.unshift));
+storage = JSON.parse(localStorage.getItem("newNote"));

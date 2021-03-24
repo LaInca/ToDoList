@@ -1,9 +1,6 @@
 body{
     background-image: linear-gradient(to right bottom, #ffffff, #e2f5ff, #a0f3ff, #41f2f9, #12ebbc);
     background-repeat: no-repeat;
-    height: 100vh;
-
-    
 }
 h1{
     text-align: center;
@@ -16,4 +13,9 @@ h1{
     text-align: center;
     color:white;
     width: 50%;
+}
+.form{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

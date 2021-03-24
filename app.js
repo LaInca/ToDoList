@@ -15,7 +15,7 @@ let notesJSON = `[
 			{"Payer le loyer": false}
 		],
 		"date": "18/01/2021",
-		"couleur": "vert",
+		"couleur": "orange",
 		"dateRappel": "null"
 	}
 ]`

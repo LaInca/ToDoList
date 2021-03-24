@@ -9,8 +9,75 @@
     <div>
         <h1>To Do List</h1>
       </div>
-    
-    <div id="container"></div>
+      <H1>ADD NOTE</H1>
+      <form class="form">
+        <input id="titreTexteNote" placeholder="titre">
+        <textarea id="texteTexteNote" placeholder="texte"></textarea>
+        <label for="dateCreationTexteNote">Date:</label>
+        <input type="date" id="dateCreationTexteNote" value="2021-03-22"
+        min="2018-01-01" max="2035-12-31">
+        <label for="dateRappelTexteNote">Date de rappel:</label>
+        <input type="date" id="dateRappelTexteNote" value="2021-03-22"
+        min="2018-01-01" max="2035-12-31">
+        <SELECT id="couleurTexteNote" size="4">
+          <OPTION>rouge</OPTION>
+          <OPTION>orange</OPTION>
+          <OPTION>jaune</OPTION>
+          <OPTION>vert</OPTION>
+          </SELECT>
+            <br>
+        <button onclick="createTextNote()">add</button>
+      </form>
+      
+      <h1>ADD TO DO</h1>
+      <form class="form">
+        <input id="titretoDo" placeholder="titre">
+        <textarea id="texteToDo" placeholder="texte"></textarea>
+        <label for="dateCreationToDo">Date:</label>
+        <input type="date" id="dateCreationToDo" value="2021-03-22"
+        min="2018-01-01" max="2035-12-31">
+        <label for="dateRappelToDo">Date de rappel:</label>
+        <input type="date" id="dateRappelToDo" value="2021-03-22"
+        min="2018-01-01" max="2035-12-31">
+        <SELECT id="couleurToDo" size="4">
+          <OPTION>rouge</OPTION>
+          <OPTION>orange</OPTION>
+          <OPTION>jaune</OPTION>
+          <OPTION>vert</OPTION>
+          </SELECT>
+            <br>
+        <button onclick="createToDo()">add</button>
+      </form>
+
+      <div id="container"></div> 
+      <script>
+        function createTextNote(){
+        event.preventDefault()//Empeche form d'etre envoyé et page etre rechargee
+        let titreTexteNote = document.querySelector("#titreTexteNote") 
+        let valeurTitreTexteNote = titreTexteNote.value
+
+        let texteTexteNote = document.querySelector("#texteTexteNote")
+        let valeurTexteTexteNote = texteTexteNote.value
+
+        let dateCreationTexteNote = document.querySelector("#dateCreationTexteNote")
+        let valeurDateCreationTexteNote = dateCreationTexteNote.value
+
+        let dateRappelTexteNote = document.querySelector("#dateRappelTexteNote")
+        let valeurDateRappelTexteNote = dateRappelTexteNote.value
+        
+        let couleurTexteNote = document.querySelector("#couleurTexteNote")
+        let valeurCouleurTexteNote = couleurTexteNote.value
+        //console.log(valeurTitreTexteNote,valeurTexteTexteNote,valeurDateCreationTexteNote,valeurDateRappelTexteNote,valeurCouleurTexteNote)
+        let nouvelleTexteNote = new TextNote(valeurTitreTexteNote,valeurTexteTexteNote,valeurDateCreationTexteNote,valeurCouleurTexteNote,valeurDateRappelTexteNote)
+        noteArray.unshift(nouvelleTexteNote)
+        console.log(noteArray)
+        Note.displayNotes(noteArray,document.querySelector("#container"))
+        }
+        function createToDo(){
+          event.preventDefault()
+          let 
+        }
+      </script>   
       <script src="app.js"></script>
       <script src="notes.js"></script>
 
